@@ -4,7 +4,7 @@
 2. Install dependencies:
 
    
-   pip install -r requirements.txt
+   pip install -r cms/requirements.txt
 3. Configure your database in settings.py file
 4. To Create tables, use given command:
    
