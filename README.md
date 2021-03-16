@@ -68,7 +68,7 @@
   url: /api/v1/contentmanagements/
   
   
-  To create cms use form type of request data and refer (Content item fields) given db:
+  To create cms use form type of request data and refer (Content item fields) given db
   
   
   Delete request data:
