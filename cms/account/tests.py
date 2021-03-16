@@ -14,6 +14,7 @@ class AccountTestCase(TestCase):
         	first_name="Sarvesh", last_name='Singh', address='Roopena',
         	city='Bangalore', state='Karnataka', country='India',
         	phone='+918896052348',password=password,pincode=564433)
+    
     def test_create_account(self):
     	url = reverse('registrations')
     	data = {"email":"amitsingh@gmail.com", "first_name":"xyz", "last_name":"abc", "phone":"+919480695563", "pincode":"122454", "password":"Sarvesh21"}

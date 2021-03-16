@@ -20,13 +20,16 @@ from rest_framework import status
 
 
 def get_payload(request):
-	token = request.META.get('HTTP_AUTHORIZATION', 'Bearer')
-	token = token.split()
-	payload = jwt.decode(jwt=token[1], key=settings.SECRET_KEY, 
-		algorithms=['HS256'])
-	return payload
+	try:
+		token = request.META['HTTP_AUTHORIZATION'].split()
+		payload = jwt.decode(jwt=token[1], key=settings.SECRET_KEY, 
+			algorithms=['HS256'])
+		return payload
+	except:
+		return "Not authenticated"
 
 # Create your views here.
+@api_view(['GET','POST','PUT',"DELETE"])
 @permission_classes([IsAuthenticated])
 @csrf_exempt
 def content_management(request):
@@ -34,7 +37,6 @@ def content_management(request):
 	    if request.method == 'POST':
 	   
     		payload = get_payload(request)
-	    	print(request.POST)
 	    	user_id = payload['user_id']
 	    	data = dict()
 	    	data['author'] = user_id
@@ -42,7 +44,12 @@ def content_management(request):
 	    	data['body'] = request.POST.get('body')
 	    	data['summary'] = request.POST.get('summary')
 	    	data['categories'] = request.POST.get('categories')
-	    	# print(request.FILES['file_upload'])
+	    	extension = str(request.FILES['file_upload'])
+	    	extension = extension.split('.')
+	    	if extension[1] != 'pdf':
+	    		return JsonResponse({"message":
+	    			"Please upload file in pdf format only"}, 
+	    			status=status.HTTP_400_BAD_REQUEST) 
 	    	request_file = request.FILES['file_upload'] if 'file_upload' in request.FILES else None
 	    	if request_file:
 		    	# fs = FileSystemStorage()
@@ -73,28 +80,37 @@ def content_management(request):
 	    	try:
 	    		data = json.loads(request.body)
 	    		if len(data)<2 or len(data)>7:
-	    			return JsonResponse({"message":"Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+	    			return JsonResponse({"message":"Bad Request"}, 
+	    				status=status.HTTP_400_BAD_REQUEST)
 	    		result = ContentManagement.objects.filter(pk=data['id']).update(**data)
 	    		if result == 0:
-	    			return JsonResponse({"message":"Data Not Found"}, status=status.HTTP_404_NOT_FOUND)
+	    			return JsonResponse({"message":"Data Not Found"}, 
+	    				status=status.HTTP_404_NOT_FOUND)
 	    		else:
-	    			return JsonResponse({"message":"Successfully Updated"}, status=status.HTTP_200_OK)
+	    			return JsonResponse({"message":"Successfully Updated"}, 
+	    				status=status.HTTP_200_OK)
 	    	except Exception as e:
-	    		return JsonResponse({"error":str(e)}, status=status.HTTP_400_BAD_REQUEST)
+	    		return JsonResponse({"error":str(e)}, 
+	    			status=status.HTTP_400_BAD_REQUEST)
 	    elif request.method == 'DELETE':
 	    	try:
 	    		data = json.loads(request.body)
 	    		if len(data) != 1:
-	    			return JsonResponse({"message":"Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+	    			return JsonResponse({"message":"Bad Request"}, 
+	    				status=status.HTTP_400_BAD_REQUEST)
 	    		result = ContentManagement.objects.filter(pk=data['id']).delete()
 	    		if result[0] == 0:
-	    			return JsonResponse({"message":"Data Not Found"}, status=status.HTTP_404_NOT_FOUND)
+	    			return JsonResponse({"message":"Data Not Found"}, 
+	    				status=status.HTTP_404_NOT_FOUND)
 	    		else:
-	    			return JsonResponse({"message":"Successfully Deleted"}, status=status.HTTP_200_OK)
+	    			return JsonResponse({"message":"Successfully Deleted"}, 
+	    				status=status.HTTP_200_OK)
 	    	except Exception as e:
-	    		return JsonResponse({"error":str(e)},status=status.HTTP_400_BAD_REQUEST)
+	    		return JsonResponse({"error":str(e)},
+	    			status=status.HTTP_400_BAD_REQUEST)
 	    else:
 	    	return JsonResponse({"message":
 	    		"Please request with get or post or put or delete http method"}, status=status.HTTP_400_BAD_REQUEST)
 	except Exception as e:
-		return JsonResponse({"error":str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		return JsonResponse({"error":str(e)}, 
+			status=status.HTTP_500_INTERNAL_SERVER_ERROR)
