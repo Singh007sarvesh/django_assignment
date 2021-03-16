@@ -1,7 +1,7 @@
 # django_assignment
 
 1. Create a Python 3.7 virtualenv
-2. Install dependencies:
+2. Install dependencies: \n
    pip install -r requirements.txt
 3. Configure your database in settings.py file
 4. To Create tables, use given command:
