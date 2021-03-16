@@ -1,10 +1,14 @@
 # django_assignment
 
 1. Create a Python 3.7 virtualenv
-2. Install dependencies: \n
+2. Install dependencies:
+
+   
    pip install -r requirements.txt
 3. Configure your database in settings.py file
 4. To Create tables, use given command:
+   
+   
    - python manage.py makemigrations
    - python manage.py migrate
 5. Create a superuser using given command:
