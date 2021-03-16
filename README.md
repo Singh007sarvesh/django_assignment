@@ -12,18 +12,26 @@
    - python manage.py makemigrations
    - python manage.py migrate
 5. Create a superuser using given command:
+
+
    python manage.py loaddata seed_super_user.json
    useremail:admin@gmail.com
    password:Sarvesh@12
 6. Run the server:
+
+
    python manage.py runserver
 7. api's and request data:
+   
+   
    login api: HTTP POST
    url: /api/v1/login/
    request data: {
     "email":"",
     "password":""
    }
+   
+   
    registration api: HTTP POST
    url: /api/v1/registrations/
    request data: {
@@ -38,14 +46,22 @@
     "state":"",
     "country":""
   }
+  
+  
   cms api: HTTP POST,GET,PUT,DELETE
+  
+  
   url: /api/v1/contentmanagements/
+  
+  
   To create cms use form type of request data and refer given db:
   
   Delete request data:
   {
     "id":id number
   }
+  
+  
   
   Put request data:
   {
