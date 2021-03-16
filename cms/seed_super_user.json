@@ -1,0 +1,32 @@
+[
+  {
+    "model": "account.Account",
+    "pk": 1,
+    "fields": {
+      "email":"admin@gmail.com",
+      "first_name": "xyz",
+      "last_name": "abc",
+      "phone":9380697525,
+      "pincode":560068,
+      "password":"pbkdf2_sha256$216000$RXFPdfEIXeRo$dZ+qM9wbCj3+uLc+C2YW+KXaQU9U8s83j+azylY9AIA=",
+      "is_admin":true,
+      "is_staff":true,
+      "is_superuser":true
+    }
+  },
+  {
+    "model": "account.Account",
+    "pk": 2,
+    "fields": {
+      "email":"sarvesh@gmail.com",
+      "first_name": "Sarvesh",
+      "last_name": "Singh",
+      "phone":9380692575,
+      "pincode":560068,
+      "password":"pbkdf2_sha256$216000$RXFPdfEIXeRo$dZ+qM9wbCj3+uLc+C2YW+KXaQU9U8s83j+azylY9AIA=",
+      "is_admin":true,
+      "is_staff":true,
+      "is_superuser":true
+    }
+  }
+]
